@@ -1,0 +1,870 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+<style>
+  .magcustom9 {
+    background-color: {{ section.settings.section_bg_color }};
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    position: relative;
+  }
+
+  /* Added anchor point styling */
+  .magcustom9-anchor {
+    position: absolute;
+    top: -100px;
+    visibility: hidden;
+  }
+
+  /* Title alignment classes */
+  .magcustom9 .section-header {
+    text-align: {{ section.settings.title_alignment }};
+  }
+
+  .magcustom9 .section-header .title-container {
+    display: inline-block;
+    max-width: 100%;
+    text-align: {{ section.settings.title_alignment }};
+  }
+
+  .magcustom9 .section-header p {
+    {% if section.settings.title_alignment == 'left' %}
+      margin-left: 0;
+      margin-right: auto;
+    {% elsif section.settings.title_alignment == 'right' %}
+      margin-left: auto;
+      margin-right: 0;
+    {% else %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  .magcustom9 .product-carousel .swiper-button-next,
+  .magcustom9 .product-carousel .swiper-button-prev {
+    color: #336666;
+    background: white;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex !important;
+  }
+
+  .magcustom9 .product-carousel .swiper-button-next:after,
+  .magcustom9 .product-carousel .swiper-button-prev:after {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .magcustom9 .product-carousel .swiper-pagination {
+    padding: 20px 0 10px 0;
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .magcustom9 .product-carousel .swiper-pagination-bullet {
+    background: #336666;
+    opacity: 0.3;
+    width: 8px;
+    height: 8px;
+    margin: 0 6px !important;
+  }
+
+  .magcustom9 .product-carousel .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #336666;
+  }
+
+  /* Center single product */
+  .magcustom9 .swiper-wrapper-single {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Hide pagination on desktop if setting is enabled */
+  {% if section.settings.hide_pagination_desktop %}
+    @media (min-width: 769px) {
+      .magcustom9 .product-carousel .swiper-pagination {
+        display: none !important;
+      }
+    }
+  {% endif %}
+
+  /* Hide pagination on mobile if setting is enabled */
+  {% if section.settings.hide_pagination_mobile %}
+    @media (max-width: 768px) {
+      .magcustom9 .product-carousel .swiper-pagination {
+        display: none !important;
+      }
+    }
+  {% endif %}
+
+  /* Hide arrows on desktop if setting is enabled */
+  {% if section.settings.hide_arrows_desktop %}
+    @media (min-width: 769px) {
+      .magcustom9 .product-carousel .swiper-button-next,
+      .magcustom9 .product-carousel .swiper-button-prev {
+        display: none !important;
+      }
+    }
+  {% endif %}
+
+  /* Hide arrows on mobile if setting is enabled */
+  {% if section.settings.hide_arrows_mobile %}
+    @media (max-width: 768px) {
+      .magcustom9 .product-carousel .swiper-button-next,
+      .magcustom9 .product-carousel .swiper-button-prev {
+        display: none !important;
+      }
+    }
+  {% endif %}
+
+  .magcustom9 .promotional-tag {
+    background-color: {{ section.settings.promotional_tag_bg_color }};
+    color: {{ section.settings.promotional_tag_text_color }};
+    font-size: 20px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .magcustom9 .product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .magcustom9 .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+
+  .magcustom9 .product-card .product-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .magcustom9 .product-card .product-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .magcustom9 .product-card .compare-at-price {
+    font-size: 14px;
+    color: #ff0000;
+    {% if section.settings.show_strikethrough %}
+    text-decoration: line-through;
+    {% else %}
+    text-decoration: none;
+    {% endif %}
+    margin-left: 6px;
+  }
+
+  .magcustom9 .product-card .variant-info {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+  }
+
+  .magcustom9 .product-image-container {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+    background: #f5f5f5;
+  }
+
+  .magcustom9 .product-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .magcustom9 .product-card:hover .product-image-container img {
+    transform: scale(1.03);
+  }
+
+  .magcustom9 .product-content {
+    padding: 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .magcustom9 .price-container {
+    margin-top: auto;
+  }
+
+  .magcustom9 .section-header h2 {
+    margin: 0;
+    padding: 0;
+    font-size: {{ section.settings.desktop_title_size }}px;
+    color: {{ section.settings.title_color }};
+  }
+
+  .magcustom9 .section-header p {
+    font-size: {{ section.settings.desktop_subtitle_size }}px;
+    color: {{ section.settings.subtitle_color }};
+    margin-top: {{ section.settings.title_subtitle_spacing }}px;
+    {% if section.settings.title_alignment == 'left' %}
+      text-align: left;
+    {% elsif section.settings.title_alignment == 'right' %}
+      text-align: right;
+    {% else %}
+      text-align: center;
+    {% endif %}
+  }
+
+  /* Add to Cart Button Styles */
+  .magcustom9 .add-to-cart-btn {
+    display: block;
+    width: 100%;
+    margin: 12px auto 0;
+    background-color: #336666;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .magcustom9 .add-to-cart-btn:hover {
+    background-color: #2a5555;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Shown when Shopify reports the product unavailable. `product.available`
+     already accounts for "continue selling when out of stock". */
+  .magcustom9 .add-to-cart-btn--sold-out,
+  .magcustom9 .add-to-cart-btn--sold-out:hover {
+    opacity: 1; /* the theme's [disabled] rule fades this to .5 */
+    background-color: #f4f4f4;
+    color: #4a4a4a;
+    border: 1px solid #d0d0d0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    .magcustom9 {
+      padding: {{ section.settings.mobile_section_padding_top }}px 0 {{ section.settings.mobile_section_padding_bottom }}px;
+    }
+
+    .magcustom9 .product-card .product-title {
+      font-size: 13px;
+    }
+
+    .magcustom9 .product-card .product-price {
+      font-size: 15px;
+    }
+
+    .magcustom9 .product-card .compare-at-price {
+      font-size: 13px;
+    }
+
+    .magcustom9 .section-header h2 {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
+
+    .magcustom9 .section-header p {
+      font-size: {{ section.settings.mobile_subtitle_size }}px;
+    }
+
+    .magcustom9 .add-to-cart-btn {
+      font-size: 15px;
+      padding: 10px 14px;
+    }
+  }
+</style>
+
+<div class="w-full magcustom9" style="background-color: {{ section.settings.section_bg_color }};">
+  <!-- Anchor point added here -->
+  {% if section.settings.anchor_name != blank %}
+    <div id="{{ section.settings.anchor_name | handleize }}" class="magcustom9-anchor"></div>
+  {% endif %}
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="mb-6 md:mb-8 section-header">
+      <div class="title-container">
+        {% if section.settings.title != blank %}
+          <h2 class="text-xl md:text-3xl font-bold mb-3">
+            {{ section.settings.title }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.subtitle != blank %}
+          <p class="text-sm md:text-base max-w-2xl">
+            {{ section.settings.subtitle }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Product Carousel -->
+    {% if section.settings.collection != blank and section.settings.collection.products.size > 0 %}
+      {% assign products_count = section.settings.collection.products.size
+        | at_most: section.settings.products_to_show
+      %}
+
+      <div class="swiper product-carousel">
+        <div class="swiper-wrapper {% if products_count == 1 %}swiper-wrapper-single{% endif %}">
+          {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+            <div class="swiper-slide">
+              <div class="product-card rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                <div class="product-image-container">
+                  {% if section.settings.show_promotional_tag and section.settings.promotional_text != blank %}
+                    <div class="promotional-tag">
+                      {{ section.settings.promotional_text }}
+                    </div>
+                  {% endif %}
+
+                  <a href="{{ product.url }}" class="block h-full">
+                    {% if product.featured_image %}
+                      {{
+                        product.featured_image
+                        | image_url: width: 500
+                        | image_tag: loading: 'lazy', class: 'w-full h-full', alt: product.featured_image.alt
+                        | escape
+                      }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full bg-gray-100' }}
+                    {% endif %}
+                  </a>
+                </div>
+
+                <div class="product-content">
+                  <a href="{{ product.url }}" class="block">
+                    <h3 class="product-title">
+                      {{ product.title }}
+                    </h3>
+                  </a>
+
+                  <div class="price-container">
+                    {% if product.compare_at_price > product.price %}
+                      <div class="flex items-center">
+                        <span class="product-price">
+                          {{ product.price | money }}
+                        </span>
+                        {% if section.settings.show_compare_at_price %}
+                          <span class="compare-at-price">
+                            {{ product.compare_at_price | money }}
+                          </span>
+                        {% endif %}
+                      </div>
+                    {% else %}
+                      <span class="product-price">
+                        {{ product.price | money }}
+                      </span>
+                    {% endif %}
+                  </div>
+
+                  {% if product.variants.size > 1 and section.settings.show_variant_count %}
+                    <p class="variant-info">{{ product.variants.size }} options</p>
+                  {% endif %}
+
+                  <!-- Add to Cart Button -->
+                  {% if product.available %}
+                    <form method="post" action="/cart/add">
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <button type="submit" class="add-to-cart-btn">ADD TO CART</button>
+                    </form>
+                  {% else %}
+                    <button type="button" class="add-to-cart-btn add-to-cart-btn--sold-out" disabled>
+                      {{ 'products.product.sold_out_high_demand' | t }}
+                    </button>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Navigation Arrows - Conditionally rendered based on settings -->
+        {% unless section.settings.hide_arrows_desktop and section.settings.hide_arrows_mobile %}
+          <div
+            class="swiper-button-prev {% if section.settings.hide_arrows_mobile %}!hidden md:!flex{% elsif section.settings.hide_arrows_desktop %}!flex md:!hidden{% else %}!hidden md:!flex{% endif %}"
+          ></div>
+          <div
+            class="swiper-button-next {% if section.settings.hide_arrows_mobile %}!hidden md:!flex{% elsif section.settings.hide_arrows_desktop %}!flex md:!hidden{% else %}!hidden md:!flex{% endif %}"
+          ></div>
+        {% endunless %}
+
+        <!-- Pagination - Conditionally rendered based on settings -->
+        {% unless section.settings.hide_pagination_desktop and section.settings.hide_pagination_mobile %}
+          <div
+            class="swiper-pagination {% if section.settings.hide_pagination_mobile %}!hidden md:!block{% elsif section.settings.hide_pagination_desktop %}!block md:!hidden{% endif %}"
+          ></div>
+        {% endunless %}
+      </div>
+    {% else %}
+      <div class="text-center py-8">
+        <div class="max-w-md mx-auto">
+          <i class="ph ph-storefront text-5xl text-gray-300 mb-4"></i>
+          <h3 class="text-lg font-semibold text-gray-600 mb-2">No Products Found</h3>
+          <p class="text-gray-500 text-sm">
+            {% if section.settings.collection == blank %}
+              Please select a collection to display products.
+            {% else %}
+              The selected collection doesn't contain any products.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  class ProductCarousel {
+    constructor(element) {
+      this.element = element;
+      this.swiper = null;
+      this.init();
+    }
+
+    init() {
+      const slidesCount = this.element.querySelectorAll('.swiper-slide').length;
+      const hidePaginationDesktop = {{ section.settings.hide_pagination_desktop | json }};
+      const hidePaginationMobile = {{ section.settings.hide_pagination_mobile | json }};
+      const hideArrowsDesktop = {{ section.settings.hide_arrows_desktop | json }};
+      const hideArrowsMobile = {{ section.settings.hide_arrows_mobile | json }};
+      const isSingleProduct = slidesCount === 1;
+
+      const swiperOptions = {
+        loop: !isSingleProduct && slidesCount > 1,
+        speed: 500,
+        spaceBetween: isSingleProduct ? 0 : 16,
+        slidesPerView: isSingleProduct ? 1 : 1,
+        centeredSlides: isSingleProduct,
+        touchRatio: 1,
+        touchAngle: 45,
+        grabCursor: true,
+        breakpoints: {
+          480: {
+            slidesPerView: isSingleProduct ? 1 : Math.min(2, slidesCount),
+            spaceBetween: isSingleProduct ? 0 : 16,
+          },
+          768: {
+            slidesPerView: isSingleProduct ? 1 : Math.min(3, slidesCount),
+            spaceBetween: isSingleProduct ? 0 : 20,
+          },
+          1024: {
+            slidesPerView: isSingleProduct ? 1 : Math.min(4, slidesCount),
+            spaceBetween: isSingleProduct ? 0 : 24,
+          }
+        }
+      };
+
+      // Add pagination if not hidden on current device and not single product
+      const shouldShowPagination = !isSingleProduct && ((window.innerWidth >= 768) ? !hidePaginationDesktop : !hidePaginationMobile);
+      if (shouldShowPagination) {
+        swiperOptions.pagination = {
+          el: '.swiper-pagination',
+          clickable: true,
+        };
+      }
+
+      // Add navigation if arrows not hidden on current device and not single product
+      const shouldShowArrows = !isSingleProduct && ((window.innerWidth >= 768) ? !hideArrowsDesktop : !hideArrowsMobile);
+      if (shouldShowArrows) {
+        swiperOptions.navigation = {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        };
+      }
+
+      this.swiper = new Swiper(this.element, swiperOptions);
+
+      // Update navigation elements on window resize
+      window.addEventListener('resize', () => {
+        const isDesktop = window.innerWidth >= 768;
+
+        // Handle pagination visibility
+        const pagination = this.element.querySelector('.swiper-pagination');
+        if (pagination) {
+          const shouldShow = !isSingleProduct && (isDesktop ? !hidePaginationDesktop : !hidePaginationMobile);
+          pagination.style.display = shouldShow ? 'block' : 'none';
+
+          // Update Swiper instance if needed
+          if (shouldShow && !this.swiper.pagination.el) {
+            this.swiper.pagination.init();
+            this.swiper.pagination.render();
+            this.swiper.pagination.update();
+          }
+        }
+
+        // Handle arrows visibility
+        const prevBtn = this.element.querySelector('.swiper-button-prev');
+        const nextBtn = this.element.querySelector('.swiper-button-next');
+        if (prevBtn && nextBtn) {
+          const shouldShow = !isSingleProduct && (isDesktop ? !hideArrowsDesktop : !hideArrowsMobile);
+          prevBtn.style.display = shouldShow ? 'flex' : 'none';
+          nextBtn.style.display = shouldShow ? 'flex' : 'none';
+
+          // Update Swiper instance if needed
+          if (shouldShow && !this.swiper.navigation.nextEl) {
+            this.swiper.navigation.init();
+            this.swiper.navigation.update();
+          }
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.magcustom9 .product-carousel');
+    if (carousel) {
+      new ProductCarousel(carousel);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Mag Custom 9",
+  "class": "magcustom9",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Anchor"
+    },
+    {
+      "type": "text",
+      "id": "anchor_name",
+      "label": "Anchor Name",
+      "info": "Add a unique name to create an anchor point for this section (e.g., 'featured-products'). You can then link to it using #anchor-name in URLs.",
+      "default": "Products"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "title_subtitle_spacing",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Title-Subtitle Spacing",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Title Alignment"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title & Subtitle Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Title & Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Discover our latest products"
+    },
+    {
+      "type": "range",
+      "id": "desktop_title_size",
+      "min": 20,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Title Size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Title Size",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle/Description",
+      "default": "Designed for performance and style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_subtitle_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Subtitle Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_subtitle_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Subtitle Size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Product Display"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "label": "Products to Show",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Carousel Navigation"
+    },
+    {
+      "type": "paragraph",
+      "content": "Control which navigation elements appear on different devices"
+    },
+    {
+      "type": "header",
+      "content": "Pagination Dots"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_pagination_desktop",
+      "label": "Hide on Desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_pagination_mobile",
+      "label": "Hide on Mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Navigation Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows_desktop",
+      "label": "Hide on Desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows_mobile",
+      "label": "Hide on Mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Price Display Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_at_price",
+      "label": "Show Compare At Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_strikethrough",
+      "label": "Show Strikethrough on Compare Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_count",
+      "label": "Show Variant Count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Promotional Tag"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_promotional_tag",
+      "label": "Show Promotional Tag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "promotional_text",
+      "label": "Promotional Text",
+      "default": "NEW"
+    },
+    {
+      "type": "color",
+      "id": "promotional_tag_bg_color",
+      "label": "Promotional Tag Background Color",
+      "default": "#336666"
+    },
+    {
+      "type": "color",
+      "id": "promotional_tag_text_color",
+      "label": "Promotional Tag Text Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mag Custom 9",
+      "settings": {
+        "section_bg_color": "#FFFFFF",
+        "section_padding_top": 40,
+        "section_padding_bottom": 40,
+        "mobile_section_padding_top": 30,
+        "mobile_section_padding_bottom": 30,
+        "title_subtitle_spacing": 12,
+        "title_alignment": "center",
+        "title": "Discover our products",
+        "subtitle": "Designed for performance and style",
+        "collection": "activewear",
+        "products_to_show": 8,
+        "hide_pagination_desktop": false,
+        "hide_pagination_mobile": false,
+        "hide_arrows_desktop": false,
+        "hide_arrows_mobile": false,
+        "show_promotional_tag": true,
+        "promotional_text": "NEW",
+        "show_compare_at_price": true,
+        "show_strikethrough": true,
+        "show_variant_count": true,
+        "desktop_title_size": 24,
+        "mobile_title_size": 20,
+        "desktop_subtitle_size": 16,
+        "mobile_subtitle_size": 14,
+        "title_color": "#000000",
+        "subtitle_color": "#666666",
+        "promotional_tag_bg_color": "#336666",
+        "promotional_tag_text_color": "#FFFFFF"
+      }
+    }
+  ]
+}
+{% endschema %}

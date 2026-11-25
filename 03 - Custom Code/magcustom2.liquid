@@ -1,0 +1,444 @@
+{% schema %}
+{
+  "name": "magcustom2",
+  "settings": [
+    { "type": "header", "content": "Anchor Navigation Boxes" },
+    { "type": "checkbox", "id": "show_anchor_boxes", "label": "Enable Anchor Boxes", "default": false },
+    { "type": "text", "id": "anchor_1_title", "label": "Box 1 Title", "default": "I want to create an outdoor escape" },
+    { "type": "text", "id": "anchor_1_link_text", "label": "Box 1 Link Text", "default": "Explore VistaGato Freedom & Signature" },
+    { "type": "text", "id": "anchor_1_url_desktop", "label": "Box 1 Link URL (Desktop)", "info": "Type your anchor here, e.g., #outdoor" },
+    { "type": "text", "id": "anchor_1_url_mobile", "label": "Box 1 Link URL (Mobile)", "info": "Type your anchor here, e.g., #outdoor" },
+    { "type": "text", "id": "anchor_2_title", "label": "Box 2 Title", "default": "I want to clear out indoor litter & odors" },
+    { "type": "text", "id": "anchor_2_link_text", "label": "Box 2 Link Text", "default": "Explore VistaGato Premier & Luxe" },
+    { "type": "text", "id": "anchor_2_url_desktop", "label": "Box 2 Link URL (Desktop)", "info": "Type your anchor here, e.g., #indoor" },
+    { "type": "text", "id": "anchor_2_url_mobile", "label": "Box 2 Link URL (Mobile)", "info": "Type your anchor here, e.g., #indoor" },
+
+    { "type": "header", "content": "Section Content" },
+    { "type": "text", "id": "title", "label": "Title" },
+    { "type": "text", "id": "subtext", "label": "Subtext" },
+
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop Image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile Image" },
+
+    { "type": "range", "id": "desktop_title_size", "min": 16, "max": 72, "step": 1, "unit": "px", "label": "Desktop Title Size", "default": 32 },
+    { "type": "range", "id": "mobile_title_size", "min": 16, "max": 72, "step": 1, "unit": "px", "label": "Mobile Title Size", "default": 24 },
+
+    { "type": "range", "id": "desktop_subtext_size", "min": 12, "max": 36, "step": 1, "unit": "px", "label": "Desktop Subtext Size", "default": 18 },
+    { "type": "range", "id": "mobile_subtext_size", "min": 12, "max": 36, "step": 1, "unit": "px", "label": "Mobile Subtext Size", "default": 16 },
+
+    { "type": "color", "id": "desktop_title_color", "label": "Desktop Title Color", "default": "#000000" },
+    { "type": "color", "id": "mobile_title_color", "label": "Mobile Title Color", "default": "#000000" },
+
+    { "type": "color", "id": "desktop_subtext_color", "label": "Desktop Subtext Color", "default": "#000000" },
+    { "type": "color", "id": "mobile_subtext_color", "label": "Mobile Subtext Color", "default": "#000000" },
+
+    { "type": "color", "id": "section_bg_color", "label": "Section Background Color", "default": "#ffffff" },
+
+    { "type": "select", "id": "desktop_text_align", "label": "Desktop Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "select", "id": "mobile_text_align", "label": "Mobile Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+
+    { "type": "select", "id": "desktop_image_align", "label": "Desktop Image Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "select", "id": "mobile_image_align", "label": "Mobile Image Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    
+    { "type": "header", "content": "Video 1 Settings" },
+    { "type": "video", "id": "video_1", "label": "First Video" },
+    { "type": "text", "id": "v1_schema_title", "label": "Video 1 Schema Title Override", "info": "Leave blank to auto-use section title." },
+    { "type": "text", "id": "v1_schema_desc", "label": "Video 1 Schema Description Override", "info": "Leave blank to auto-use section subtext." },
+    { "type": "text", "id": "v1_schema_date", "label": "Video 1 Upload Date", "info": "Format: YYYY-MM-DD. Required by Google." },
+
+    { "type": "header", "content": "Video 2 Settings" },
+    { "type": "video", "id": "video_2", "label": "Second Video" },
+    { "type": "text", "id": "v2_schema_title", "label": "Video 2 Schema Title Override", "info": "Leave blank to auto-use section title." },
+    { "type": "text", "id": "v2_schema_desc", "label": "Video 2 Schema Description Override", "info": "Leave blank to auto-use section subtext." },
+    { "type": "text", "id": "v2_schema_date", "label": "Video 2 Upload Date", "info": "Format: YYYY-MM-DD. Required by Google." }
+  ],
+  "presets": [
+    { "name": "magcustom2", "category": "Custom" }
+  ]
+}
+{% endschema %}
+
+<style>
+  .magcustom2 {
+    padding: 60px 0;
+    background-color: {{ section.settings.section_bg_color }};
+  }
+
+  .magcustom2 .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .magcustom2 .section-title {
+    font-size: {{ section.settings.desktop_title_size }}px;
+    color: {{ section.settings.desktop_title_color }};
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: {{ section.settings.desktop_text_align }};
+  }
+
+  .magcustom2 .section-subtext {
+    font-size: {{ section.settings.desktop_subtext_size }}px;
+    color: {{ section.settings.desktop_subtext_color }};
+    margin-bottom: 30px;
+    text-align: {{ section.settings.desktop_text_align }};
+  }
+
+  /* --- GRID WRAPPER HANDLING --- */
+  .magcustom2 .anchor-boxes-container {
+    display: grid !important;
+    width: 100% !important;
+    margin: 0 auto 50px auto !important;
+  }
+
+  @media (min-width: 769px) {
+    .magcustom2 .anchor-boxes-container {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 20px !important;
+      max-width: 900px !important;
+    }
+    .magcustom2 .dtc-desktop-only { display: block !important; }
+    .magcustom2 .dtc-mobile-only { display: none !important; }
+  }
+
+  @media (max-width: 768px) {
+    .magcustom2 .anchor-boxes-container {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      max-width: 100% !important;
+      margin-bottom: 35px !important;
+    }
+    .magcustom2 .dtc-desktop-only { display: none !important; }
+    .magcustom2 .dtc-mobile-only { display: block !important; }
+  }
+
+  .magcustom2 .anchor-box {
+    background-color: #f5f6f7 !important;
+    border-radius: 8px !important;
+    padding: 24px 30px !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .magcustom2 .anchor-box:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+  }
+
+  .magcustom2 .anchor-box-title {
+    color: #2b4c4b !important;
+    font-size: 16px !important;
+    margin: 0 0 12px 0 !important;
+    font-weight: 500 !important;
+  }
+
+  .magcustom2 .anchor-box-link {
+    color: #2b4c4b !important;
+    font-size: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-weight: 400 !important;
+  }
+
+  .magcustom2 .anchor-box-link svg {
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 6px !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  .magcustom2 .anchor-box:hover .anchor-box-link svg {
+    transform: translateX(4px) !important;
+  }
+
+  /* --- IMAGES & VIDEOS --- */
+  .magcustom2 .responsive-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .magcustom2 .desktop-image {
+    margin-left: {% if section.settings.desktop_image_align == 'left' %}0{% elsif section.settings.desktop_image_align == 'right' %}auto{% else %}auto{% endif %};
+    margin-right: {% if section.settings.desktop_image_align == 'right' %}0{% elsif section.settings.desktop_image_align == 'left' %}auto{% else %}auto{% endif %};
+  }
+
+  .magcustom2 .mobile-image {
+    margin-left: {% if section.settings.mobile_image_align == 'left' %}0{% elsif section.settings.mobile_image_align == 'right' %}auto{% else %}auto{% endif %};
+    margin-right: {% if section.settings.mobile_image_align == 'right' %}0{% elsif section.settings.mobile_image_align == 'left' %}auto{% else %}auto{% endif %};
+  }
+
+  .magcustom2 .video-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 40px;
+    justify-content: center;
+  }
+
+  .magcustom2 .video-item {
+    position: relative; 
+    flex: 1 1 calc(50% - 10px); 
+    box-sizing: border-box;
+  }
+
+  .magcustom2 .video-item video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+
+  .magcustom2 .custom-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: rgba(235, 235, 235, 0.85); 
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: mag-play-pulse 2s infinite; 
+  }
+
+  .magcustom2 .custom-play-btn svg {
+      width: 24px; 
+      height: 24px; 
+      margin-left: 4px; 
+      color: #396561; 
+      fill: currentColor;
+  }
+
+  .magcustom2 .custom-play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      background-color: rgba(255, 255, 255, 1);
+      animation: none; 
+  }
+
+  @media (max-width: 768px) {
+    .magcustom2 .desktop-image { display: none; }
+    
+    .magcustom2 .section-title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+      color: {{ section.settings.mobile_title_color }};
+      text-align: {{ section.settings.mobile_text_align }};
+    }
+
+    .magcustom2 .section-subtext {
+      font-size: {{ section.settings.mobile_subtext_size }}px;
+      color: {{ section.settings.mobile_subtext_color }};
+      text-align: {{ section.settings.mobile_text_align }};
+    }
+
+    .magcustom2 .video-wrapper {
+      flex-direction: column;
+    }
+    .magcustom2 .video-item {
+      flex: 1 1 100%;
+    }
+    
+    .magcustom2 .custom-play-btn {
+        width: 45px;
+        height: 45px;
+    }
+    .magcustom2 .custom-play-btn svg {
+        width: 18px;
+        height: 18px;
+        margin-left: 3px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .magcustom2 .mobile-image { display: none; }
+  }
+</style>
+
+<div class="magcustom2">
+  <div class="container">
+    
+    {% if section.settings.title != blank %}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.subtext != blank %}
+      <p class="section-subtext">{{ section.settings.subtext }}</p>
+    {% endif %}
+
+    {% if section.settings.show_anchor_boxes %}
+      <div class="anchor-boxes-container">
+        
+        {% comment %} BOX 1 {% endcomment %}
+        {% if section.settings.anchor_1_title != blank or section.settings.anchor_1_link_text != blank %}
+          <a href="{{ section.settings.anchor_1_url_desktop | default: '#' }}" class="anchor-box dtc-desktop-only">
+            {% if section.settings.anchor_1_title != blank %}<p class="anchor-box-title">{{ section.settings.anchor_1_title }}</p>{% endif %}
+            <span class="anchor-box-link">
+              {{ section.settings.anchor_1_link_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <a href="{{ section.settings.anchor_1_url_mobile | default: '#' }}" class="anchor-box dtc-mobile-only">
+            {% if section.settings.anchor_1_title != blank %}<p class="anchor-box-title">{{ section.settings.anchor_1_title }}</p>{% endif %}
+            <span class="anchor-box-link">
+              {{ section.settings.anchor_1_link_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        {% endif %}
+
+        {% comment %} BOX 2 {% endcomment %}
+        {% if section.settings.anchor_2_title != blank or section.settings.anchor_2_link_text != blank %}
+          <a href="{{ section.settings.anchor_2_url_desktop | default: '#' }}" class="anchor-box dtc-desktop-only">
+            {% if section.settings.anchor_2_title != blank %}<p class="anchor-box-title">{{ section.settings.anchor_2_title }}</p>{% endif %}
+            <span class="anchor-box-link">
+              {{ section.settings.anchor_2_link_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <a href="{{ section.settings.anchor_2_url_mobile | default: '#' }}" class="anchor-box dtc-mobile-only">
+            {% if section.settings.anchor_2_title != blank %}<p class="anchor-box-title">{{ section.settings.anchor_2_title }}</p>{% endif %}
+            <span class="anchor-box-link">
+              {{ section.settings.anchor_2_link_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        {% endif %}
+        
+      </div>
+    {% endif %}
+
+    {% if section.settings.desktop_image != blank %}
+      <img
+        src="{{ section.settings.desktop_image | img_url: 'master' }}"
+        alt="{{ section.settings.title | escape }}"
+        class="responsive-image desktop-image"
+        loading="lazy">
+    {% endif %}
+
+    {% if section.settings.mobile_image != blank %}
+      <img
+        src="{{ section.settings.mobile_image | img_url: 'master' }}"
+        alt="{{ section.settings.title | escape }}"
+        class="responsive-image mobile-image"
+        loading="lazy">
+    {% endif %}
+
+    {% if section.settings.video_1 != blank or section.settings.video_2 != blank %}
+      <div class="video-wrapper">
+        {% if section.settings.video_1 != blank %}
+          <div class="video-item">
+            {{ section.settings.video_1 | video_tag: image_size: 'master' }}
+            <div class="custom-play-btn">
+                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </div>
+          </div>
+          
+          {%- comment -%} GENERATE SCHEMA FOR VIDEO 1 {%- endcomment -%}
+          {% assign v1_title = section.settings.v1_schema_title | default: section.settings.title | default: page_title | default: "Store Video" %}
+          {% assign v1_desc = section.settings.v1_schema_desc | default: section.settings.subtext | default: page_description | default: "Watch our video" | strip_html %}
+          {% assign v1_url = section.settings.video_1.sources[1].url | default: section.settings.video_1.sources[0].url %}
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            "name": {{ v1_title | json }},
+            "description": {{ v1_desc | json }},
+            "thumbnailUrl": {{ section.settings.video_1.preview_image | image_url: width: 1200 | json }},
+            "uploadDate": {{ section.settings.v1_schema_date | default: '2024-01-01' | json }},
+            "contentUrl": {{ v1_url | json }}
+          }
+          </script>
+        {% endif %}
+        
+        {% if section.settings.video_2 != blank %}
+          <div class="video-item">
+            {{ section.settings.video_2 | video_tag: image_size: 'master' }}
+            <div class="custom-play-btn">
+                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </div>
+          </div>
+
+          {%- comment -%} GENERATE SCHEMA FOR VIDEO 2 {%- endcomment -%}
+          {% assign v2_title = section.settings.v2_schema_title | default: section.settings.title | default: page_title | default: "Store Video" %}
+          {% assign v2_desc = section.settings.v2_schema_desc | default: section.settings.subtext | default: page_description | default: "Watch our video" | strip_html %}
+          {% assign v2_url = section.settings.video_2.sources[1].url | default: section.settings.video_2.sources[0].url %}
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            "name": {{ v2_title | json }},
+            "description": {{ v2_desc | json }},
+            "thumbnailUrl": {{ section.settings.video_2.preview_image | image_url: width: 1200 | json }},
+            "uploadDate": {{ section.settings.v2_schema_date | default: '2024-01-01' | json }},
+            "contentUrl": {{ v2_url | json }}
+          }
+          </script>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var playButtons = document.querySelectorAll('.magcustom2 .custom-play-btn');
+    
+    playButtons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var videoWrapper = this.closest('.video-item');
+        var video = videoWrapper.querySelector('video');
+        
+        if (video) {
+          video.setAttribute('controls', 'controls');
+          video.play();
+          this.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

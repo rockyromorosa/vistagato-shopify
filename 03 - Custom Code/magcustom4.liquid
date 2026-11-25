@@ -1,0 +1,90 @@
+<style>
+  .magcustom4-fullwidth-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .magcustom4-wrapper {
+    padding: 0;
+    margin: 0;
+    /* This makes the wrapper a block-level link if the URL is set */
+    display: block; 
+  }
+
+  @media (max-width: 768px) {
+    .magcustom4-fullwidth-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>
+
+{%- comment -%}
+  We check if a link has been added. If so, we create an anchor tag.
+  The 'target' attribute is conditionally added if the checkbox is ticked.
+{%- endcomment -%}
+{%- if section.settings.link_url != blank -%}
+  <a href="{{ section.settings.link_url }}" 
+     class="magcustom4-wrapper" 
+     {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+     aria-label="{{ section.settings.image.alt | escape }}">
+{%- else -%}
+  <div class="magcustom4-wrapper">
+{%- endif -%}
+
+  {%- comment -%}
+    The image is displayed here. It will be inside the <a> tag if a link exists.
+  {%- endcomment -%}
+  {% if section.settings.image != blank %}
+    {{
+      section.settings.image
+      | image_url: width: 2000
+      | image_tag: loading: 'lazy', alt: section.settings.image.alt, class: 'magcustom4-fullwidth-image'
+    }}
+  {% else %}
+    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+  {% endif %}
+
+{%- if section.settings.link_url != blank -%}
+  </a>
+{%- else -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MagCustom4",
+  "class": "magcustom4",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Full Width Image",
+      "info": "Upload a high-quality image (ideally 2000px wide for best results)"
+    },
+    {
+      "type": "header",
+      "content": "Link Settings"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Image link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in new tab",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "MagCustom4 - Full Image",
+      "category": "Custom",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
