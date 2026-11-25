@@ -154,7 +154,7 @@ The `magcustom5` and `magcustom6` sections are similar in structure, with separa
 ```text
 vistagato-shopify/
 ├── 01 - Homepage/
-│   ├── VistaGato_01_Hero.png
+│   ├── VistaGato_01_Homepage.png
 │   └── VistaGato_02_Our_Vistas.png
 ├── 02 - Product Detail Pages/
 │   ├── VistaGato_03_Signature_Product_Page.png
@@ -162,13 +162,14 @@ vistagato-shopify/
 │   ├── VistaGato_05_Luxe_Product_Page.png
 │   └── VistaGato_06_Freedom_Product_Page.png
 ├── 03 - Custom Code/
-│   ├── product-media.liquid
+│                         
 │   ├── new-featured-product.liquid
 │   ├── magcustom2.liquid
 │   ├── magcustom4.liquid
 │   ├── magcustom5.liquid
 │   ├── magcustom6.liquid
 │   ├── magcustom7.liquid
+│   ├── magcustom8.liquid
 │   └── magcustom9.liquid
 └── README.md
 ```
