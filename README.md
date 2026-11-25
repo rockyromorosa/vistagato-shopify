@@ -33,7 +33,7 @@ Screenshots illustrate the storefront experience and the components associated w
 
 ### Homepage — Hero
 
-![VistaGato homepage hero](<01 - Homepage/VistaGato_01_Hero.png>)
+![VistaGato homepage hero](<01 - Homepage/VistaGato_01_Homepage.png>)
 
 The main homepage banner introduces the VistaGato brand and product offering.
 
