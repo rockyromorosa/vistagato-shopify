@@ -114,7 +114,7 @@ This collection-driven section includes:
 
 ## Technical Spotlight 4 — Product Video Thumbnail UI
 
-**Source:** [`product-media.liquid`](<03 - Custom Code/product-media.liquid>)
+**Source reviewed:** `product-media.liquid` (local reference; not included in this repository).
 
 The theme's product-media snippet includes custom styling and markup for video thumbnails:
 
